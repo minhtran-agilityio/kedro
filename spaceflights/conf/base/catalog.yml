@@ -76,3 +76,8 @@ regressor:
   filepath: data/06_models/regressor.pickle
   versioned: true
   layer: models
+
+# definition for aribnb
+listings:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/airbnb/listings.csv
