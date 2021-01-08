@@ -56,6 +56,15 @@ shuttles:
   filepath: data/01_raw/shuttles.xlsx
   layer: raw
 
+listings:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/listings.csv
+
+plant_growths:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/plantgrowths.csv
+  layer: raw
+
 preprocessed_companies:
   type: pandas.CSVDataSet
   filepath: data/02_intermediate/preprocessed_companies.csv
@@ -76,8 +85,3 @@ regressor:
   filepath: data/06_models/regressor.pickle
   versioned: true
   layer: models
-
-# definition for aribnb
-listings:
-  type: pandas.CSVDataSet
-  filepath: data/01_raw/airbnb/listings.csv
