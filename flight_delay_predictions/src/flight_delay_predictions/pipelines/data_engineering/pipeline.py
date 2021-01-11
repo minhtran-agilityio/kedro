@@ -33,25 +33,26 @@ Delete this when you start working on your own Kedro project.
 """
 
 from kedro.pipeline import Pipeline, node
+from typing import Dict
 
-from .nodes import partition_by_month, partition_calc
 
+def create_pipeline(**kwargs) -> Dict[str, Pipeline]:
 
-def create_pipeline(**kwargs):
-    return Pipeline(
-        [
-            node(
-                partition_by_month,
-                inputs="ontime_2019",
-                outputs="ontime_2019_incremental",
-                name="incremental"
-            ),
-            node(
-                partition_calc,
-                inputs="ontime_2019_incremental",
-                outputs="ontime_2019_calc",
-                name="calc",
-                confirms="ontime_2019_incremental",
-            ),
-        ]
-    )
+    # my_datasets = kwargs["my_datasets"]
+
+    # datasets_pipeline = Pipeline([
+    #     node(
+    #         lambda x: x,
+    #         inputs=dataset["name"],
+    #         outputs=dataset["name"] + "_output",
+    #     )
+    #     for dataset in my_datasets
+    # ])
+
+    return Pipeline([
+        node(
+            lambda x: x,
+            inputs="fake_data",
+            outputs="fake_data_output",
+        )
+    ])

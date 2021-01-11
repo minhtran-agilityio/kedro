@@ -28,8 +28,47 @@
 
 """Application entry point."""
 from pathlib import Path
+from typing import Dict
 
+from kedro.framework.context import KedroContext, load_context
 from kedro.framework.session import KedroSession
+from kedro.extras.datasets.text import TextDataSet
+from kedro.pipeline import Pipeline
+
+from flight_delay_predictions.piplines.data_engineering import create_pipeline
+
+
+class ProjectContext(KedroContext):
+    """Users can override the remaining method from the parent class here,
+    or create new ones
+
+    Args:
+        KedroContext ([type]): [description]
+    """
+
+    project_name = "flight_delay_predictions"
+    project_version = "0.17.0"
+
+    def _get_catalog(self, *args, **kwargs):
+        catalog = super()._get_catalog(*args, **kwargs)
+
+        my_datasets_file = self.config_loader.get("my_datasets*", "my_datasets*/**")
+        my_datasets = my_datasets_file["my_datasets"]
+
+        for dataset in my_datasets:
+            catalog.add(dataset["name"], TextDataSet(filepath="data/data")),
+            catalog.add(dataset["name"] + "_output", TextDataSet(filepath="data/data"))
+
+        catalog.add("fake_data", TextDataSet(filepath="data/fake-data"))
+        catalog.add("fake_data_output", TextDataSet(filepath="data/fake-data"))
+
+        return catalog
+
+    def _get_pipeline(self) -> Dict[str, Pipeline]:
+        my_datasets_file = self.config_loader.get("my_datasets*")
+        my_datasets = my_datasets_file["my_datasets"]
+
+        return create_pipeline(my_datasets=my_datasets)
 
 
 def run_package():

@@ -3,18 +3,6 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/04_user_guide/04_data_catalog.html
 
-ontime_2019:
-  type: pandas.CSVDataSet
-  filepath: data/01_raw/Jan_2019_ontime.csv
-
-ontime_2019_incremental:
-  type: kedro.io.IncrementalDataSet
-  path: data/01_raw/incremental
-  dataset: pandas.CSVDataSet
-  filename_suffix: .csv
-
-ontime_2019_calc:
-  type: kedro.io.IncrementalDataSet
-  path: data/02_intermediate/calc
-  dataset: kedro.extras.datasets.text.TextDataSet
-  filename_suffix: .txt
+fake_data:
+  type: kedro.extras.datasets.text.TextDataSet
+  filepath: data/fake-data
