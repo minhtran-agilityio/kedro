@@ -120,3 +120,9 @@ To automatically strip out all output cell contents before committing to `git`, 
 ## Package your Kedro project
 
 [Further information about building project documentation and packaging your project](https://kedro.readthedocs.io/en/stable/03_tutorial/05_package_a_project.html)
+
+
+## Download CSV Data
+Go to link and download data: https://www.kaggle.com/divyansh22/flight-delay-prediction
+
+Copy `Jan_2019_ontime.csv` file to `flight_delay_predictions/data/01_raw/` directory
