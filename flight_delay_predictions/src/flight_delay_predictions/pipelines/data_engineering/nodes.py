@@ -1,0 +1,20 @@
+from typing import Any, Dict
+
+import pandas as pd
+
+
+def partition_by_day(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+    """[summary]
+
+    Args:
+        df (pd.DataFrame): [description]
+
+    Returns:
+        Dict[str, pd.DataFrame]: [description]
+    """
+    parts = {}
+
+    for day_of_month in df["DAY_OF_MONTH"].unique():
+        parts[f"DAY_OF_MONTH=={day_of_month}"] = df[df["DAY_OF_MONTH"] == day_of_month]
+
+    return parts
