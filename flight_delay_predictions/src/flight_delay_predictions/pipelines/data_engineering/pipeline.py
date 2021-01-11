@@ -34,16 +34,24 @@ Delete this when you start working on your own Kedro project.
 
 from kedro.pipeline import Pipeline, node
 
-from .nodes import partition_by_day
+from .nodes import partition_by_month, partition_calc
 
 
 def create_pipeline(**kwargs):
     return Pipeline(
         [
             node(
-                partition_by_day,
+                partition_by_month,
                 inputs="ontime_2019",
-                outputs="ontime_2019_by_day"
+                outputs="ontime_2019_incremental",
+                name="incremental"
+            ),
+            node(
+                partition_calc,
+                inputs="ontime_2019_incremental",
+                outputs="ontime_2019_calc",
+                name="calc",
+                confirms="ontime_2019_incremental",
             ),
         ]
     )
