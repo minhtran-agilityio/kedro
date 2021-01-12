@@ -32,7 +32,7 @@ generated using Kedro 0.17.0
 """
 
 from kedro.pipeline import Pipeline, node
-from .nodes import partition_by_day
+from .nodes import partition_by_day, preprocess_companies
 
 
 def create_pipeline(**kwargs):
@@ -41,6 +41,12 @@ def create_pipeline(**kwargs):
             partition_by_day,
             "ontime_2019",
             "ontime_2019_by_day",
-            tags="initialize"
-        )
+            tags="partitions"
+        ),
+        node(
+            preprocess_companies,
+            "companies",
+            "preprocessed_companies",
+            tags="companies"
+        ),
     ])

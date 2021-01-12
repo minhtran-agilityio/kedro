@@ -89,11 +89,10 @@ class ProjectHooks:
 
 
 class DataValidationHooks:
-
     # Map expectation to dataset
     DATASET_EXPECTATION_MAPPING = {
         "companies": "raw_companies_dataset_expectation",
-        "preprocessed_companies": "preprocessed_companies_dataset_expectation"
+        "preprocessed_companies": "preprocessed_companies_dataset_expectation",
     }
 
     @hook_impl
@@ -103,12 +102,11 @@ class DataValidationHooks:
         """ Validate inputs data to a node based on using great expectation
         if an expectation suite is defined in ``DATASET_EXPECTATION_MAPPING``.
         """
-
         self._run_validation(catalog, inputs, run_id)
 
     @hook_impl
     def after_node_run(
-            self, catalog: DataCatalog, outputs: Dict[str, any], run_id: str
+            self, catalog: DataCatalog, outputs: Dict[str, Any], run_id: str
     ) -> None:
         """ Validate outputs data from a node based on using great expectation
         if an expectation suite is defined in ``DATASET_EXPECTATION_MAPPING``.
@@ -125,9 +123,11 @@ class DataValidationHooks:
             expectation_suite = self.DATASET_EXPECTATION_MAPPING[dataset_name]
 
             expectation_context = ge.data_context.DataContext()
+            print("expectation_context", expectation_context)
+
             batch = expectation_context.get_batch(
-                {"path": dataset_path, "datasource": "file_datasource"},
-                expectation_suite
+                {"path": dataset_path, "datasource": "files_datasource"},
+                expectation_suite,
             )
             expectation_context.run_validation_operator(
                 "action_list_operator", assets_to_validate=[batch], run_id=run_id

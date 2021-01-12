@@ -33,6 +33,8 @@ generated using Kedro 0.17.0
 from typing import Dict
 import pandas as pd
 
+from .helpers import _is_true, _parse_money, _parse_percentage
+
 
 def partition_by_day(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
     """
@@ -46,3 +48,14 @@ def partition_by_day(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
         parts[f"DAY_OF_MONTH=={day_of_month}"] = df[df["DAY_OF_MONTH"] == day_of_month]
 
     return parts
+
+
+def preprocess_companies(companies: pd.DataFrame) -> pd.DataFrame:
+    """
+    Preprocess the data for companies.
+    :param companies: Source data.
+    :return: Preprocessed data.
+    """
+    companies["iata_approved"] = companies["iata_approved"].apply(_is_true)
+    companies["company_rating"] = companies["company_rating"].apply(_parse_percentage)
+    return companies
